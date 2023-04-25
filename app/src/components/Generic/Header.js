@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Header.module.css'
-import {ReactComponent as LogoDogs} from '../assets/dogs.svg';
-import {ReactComponent as UsuarioIcon} from '../assets/usuario.svg';
+import {ReactComponent as LogoDogs} from '../../assets/dogs.svg';
+import {ReactComponent as UsuarioIcon} from '../../assets/usuario.svg';
 import { Icon } from './Icon';
 
 export const Header = () => {
@@ -13,7 +13,7 @@ export const Header = () => {
           <Icon icon={LogoDogs} size='medium'/>
         </Link>
 
-        <Link to="/" className={styles.buttonLoginIconContainer}>
+        <Link to="/login" className={styles.buttonLoginIconContainer}>
           <p>Login / Criar</p>
           <Icon icon={UsuarioIcon} size='small'/>
         </Link>

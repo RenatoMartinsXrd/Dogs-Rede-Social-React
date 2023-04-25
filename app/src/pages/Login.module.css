@@ -1,0 +1,14 @@
+.containerLoginPage{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.containerContentLogin{
+  margin-top: 20vh;
+  padding: 20px;
+}
+
+.imgLogin{
+  max-height: 800px;
+  width: 90%;
+}
