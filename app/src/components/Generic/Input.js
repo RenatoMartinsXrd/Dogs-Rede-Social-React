@@ -12,7 +12,7 @@ export const Input = ({name, type = "text", customClass, isReplaceStyle = false,
       {...register(name)}
       {...props}
       />
-      {error && <p>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   )
 }

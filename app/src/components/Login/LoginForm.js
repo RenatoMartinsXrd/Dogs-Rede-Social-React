@@ -6,13 +6,17 @@ import styles from './LoginForm.module.css'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { tokenPost, userGet  } from '../../services/api'
+import { TitleText } from '../Generic/TitleText'
+
 
 const schemaLogin = yup.object({
   email: yup
     .string()
-    .email('Por favor insira um email válido')
-    .required('Email é obrigatório'),
-  password: yup.string().required('Senha é obrigatório')
+    .required('Username é obrigatório'),
+  password: yup
+    .string()
+    .required('Senha é obrigatório')
 })
 
 export const LoginForm = () => {
@@ -22,16 +26,26 @@ export const LoginForm = () => {
     handleSubmit,
     formState: { errors }
   } = useForm({
+    mode: "onTouched",
     resolver: yupResolver(schemaLogin),
   });
 
-  const loginSubmit = handleSubmit(data => {
-    console.log(data);
-  });
+  async function loginSubmit({email, password}) {
+    const { token } = await tokenPost({
+      username: email,
+      password: password
+    })
+
+    const user = await userGet(token)
+    console.log(user)
+  };
 
   return (
     <section>
-      <form onSubmit={loginSubmit}>
+
+      <TitleText>Login</TitleText>
+
+      <form onSubmit={handleSubmit(loginSubmit)}>
         <Input
           name="email"
           customClass={styles.inputLogin}
@@ -39,18 +53,22 @@ export const LoginForm = () => {
           register={register}
           error={errors.email?.message}
         />
+
         <Input
           name="password"
           customClass={styles.inputPassword}
           placeholder="Digite sua senha"
           register={register}
           error={errors.password?.message}
+          type="password"
         />
+
         <Button top={20}>Entrar</Button>
-        {/* <Link to="/login/criar">
-          <p>Cadastrar</p>
-        </Link> */}
       </form>
+
+      <Link to="/login/perdeu" className={styles.perdeu}>
+          <p>Perdeu a senha?</p>
+      </Link>
     </section>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Button.module.css'
 
-export const Button = ({customClass, isReplaceStyle = false, children, left, right, top, bottom, ...props}) => {
+export const Button = ({className, isReplaceStyle = false, children, left, right, top, bottom, ...props}) => {
 
   const style = {
     marginLeft: `${left}px`,
@@ -12,7 +12,7 @@ export const Button = ({customClass, isReplaceStyle = false, children, left, rig
 
   return (
     <button
-      className={isReplaceStyle? customClass : `${styles.button} ${customClass}` }
+      className={isReplaceStyle? className : `${styles.button} ${className}` }
       style={style}
       {...props}
     >

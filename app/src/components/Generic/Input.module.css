@@ -16,3 +16,10 @@
     background: white;
     box-shadow: 0 0 0 3px #fea;
 }
+
+.error{
+  color: rgb(249, 30, 30);
+  margin-top: 5px;
+  font-size: 0.9em;
+  font-weight: 100;
+}

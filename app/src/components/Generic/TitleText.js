@@ -1,7 +1,11 @@
 import React from 'react'
 import styles from './TitleText.module.css'
 
-export const TitleText = ({children, left = 0, right = 0, top = 20, bottom = 20}) => {
+function capitalizeFirstLetter(string) {
+  return string.replace(/^\w/, c => c.toUpperCase());
+}
+
+export const TitleText = ({children, left = 0, right = 0, top = 20, bottom = 20, fontSize = 'large'}) => {
   const style = {
     marginLeft: `${left}px`,
     marginRight: `${right}px`,
@@ -9,7 +13,13 @@ export const TitleText = ({children, left = 0, right = 0, top = 20, bottom = 20}
     marginBottom: `${bottom}px`
   };
 
+  const prepareClass = (name, value) => {
+    return `${name}${capitalizeFirstLetter(value)}`
+  }
+
+  const classes = `${styles.titleText} ${styles[prepareClass('fontSize', fontSize)]}`
+
   return (
-    <h1 className={styles.titleText} style={style}>{children}</h1>
+    <h1 className={classes} style={style}>{children}</h1>
   )
 }

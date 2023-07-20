@@ -1,7 +1,6 @@
 .titleText {
   font-family: var(--type-second);
   line-height: 1;
-  font-size: 3rem;
   position: relative;
 }
 
@@ -16,4 +15,12 @@
   left: -5px;
   border-radius: 0.2rem;
   z-index: -1;
+}
+
+.fontSizeLarge{
+  font-size: 3rem;
+}
+
+.fontSizeMedium{
+  font-size: 2rem;
 }

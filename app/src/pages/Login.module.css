@@ -1,6 +1,8 @@
 .containerLoginPage{
   display: grid;
   grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  gap: 20px;
 }
 
 .containerContentLogin{
@@ -9,6 +11,6 @@
 }
 
 .imgLogin{
-  max-height: 800px;
-  width: 90%;
+  height: 100%;
+  width: 100%;
 }
