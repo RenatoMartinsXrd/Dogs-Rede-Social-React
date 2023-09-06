@@ -1,23 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '../Generic/Button'
 import { Input } from '../Generic/Input'
 import styles from './LoginForm.module.css'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-import { tokenPost, userGet  } from '../../services/api'
 import { TitleText } from '../Generic/TitleText'
-
-
-const schemaLogin = yup.object({
-  email: yup
-    .string()
-    .required('Username é obrigatório'),
-  password: yup
-    .string()
-    .required('Senha é obrigatório')
-})
+import { schemaLogin } from '../../validations/schemas'
+import { AuthService } from '../../services/AuthService'
+import { UserContext } from '../../contexts/UserContext'
 
 export const LoginForm = () => {
 
@@ -30,19 +21,15 @@ export const LoginForm = () => {
     resolver: yupResolver(schemaLogin),
   });
 
-  async function loginSubmit({email, password}) {
-    const { token } = await tokenPost({
-      username: email,
-      password: password
-    })
+  const userContext = useContext(UserContext);
+  const { userLogin } = AuthService(userContext);
 
-    const user = await userGet(token)
-    console.log(user)
+  async function loginSubmit({email, password}) {
+    userLogin({email, password})
   };
 
   return (
-    <section>
-
+    <section className={styles.containerSectionLoginForm}>
       <TitleText>Login</TitleText>
 
       <form onSubmit={handleSubmit(loginSubmit)}>
@@ -69,6 +56,15 @@ export const LoginForm = () => {
       <Link to="/login/perdeu" className={styles.perdeu}>
           <p>Perdeu a senha?</p>
       </Link>
+
+      <section className={styles.containerCadastro}>
+        <TitleText fontSize='medium' top={60} bottom={30}>Cadastre-se</TitleText>
+        <p>Ainda não possui conta? Cadastre-se no site.</p>
+
+        <Link to="/login/criar" className={styles.linkBtnCadastro}>
+          <Button top={20}>Cadastro</Button>
+        </Link>
+      </section>
     </section>
   )
 }

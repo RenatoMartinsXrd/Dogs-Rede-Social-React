@@ -5,12 +5,14 @@
   gap: 20px;
 }
 
-.containerContentLogin{
-  margin-top: 20vh;
-  padding: 20px;
+.containerLoginPage::before{
+  content: "";
+  display: block;
+  background: url("../assets/login.jpg") no-repeat 50%;
+  background-size: cover;
 }
 
-.imgLogin{
-  height: 100%;
-  width: 100%;
+.containerContentLogin{
+  margin-top: 80px;
+  padding: 20px;
 }
