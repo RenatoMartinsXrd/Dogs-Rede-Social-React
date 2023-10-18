@@ -9,6 +9,7 @@ import { TitleText } from '../Generic/TitleText'
 import { schemaLogin } from '../../validations/schemas'
 import { AuthService } from '../../services/AuthService'
 import { UserContext } from '../../contexts/UserContext'
+import { SpinnerDog } from '../SpinnerDog'
 
 export const LoginForm = () => {
 
@@ -23,35 +24,46 @@ export const LoginForm = () => {
 
   const userContext = useContext(UserContext);
   const { userLogin } = AuthService(userContext);
+  const { loading, setLoading } = userContext
 
   async function loginSubmit({email, password}) {
-    userLogin({email, password})
+    setLoading(true)
+    await userLogin({email, password})
+    setLoading(false)
   };
 
   return (
     <section className={styles.containerSectionLoginForm}>
+
       <TitleText>Login</TitleText>
 
       <form onSubmit={handleSubmit(loginSubmit)}>
-        <Input
-          name="email"
-          customClass={styles.inputLogin}
-          placeholder="Digite seu usuário"
-          register={register}
-          error={errors.email?.message}
-        />
+        {loading ? (
+          <SpinnerDog/>
+        ) : (
+          <>
+            <Input
+              name="email"
+              customClass={styles.inputLogin}
+              placeholder="Digite seu usuário"
+              register={register}
+              error={errors.email?.message}
+            />
 
-        <Input
-          name="password"
-          customClass={styles.inputPassword}
-          placeholder="Digite sua senha"
-          register={register}
-          error={errors.password?.message}
-          type="password"
-        />
+            <Input
+              name="password"
+              customClass={styles.inputPassword}
+              placeholder="Digite sua senha"
+              register={register}
+              error={errors.password?.message}
+              type="password"
+            />
 
-        <Button top={20}>Entrar</Button>
+            <Button top={20}>Entrar</Button>
+          </>
+        )}
       </form>
+
 
       <Link to="/login/perdeu" className={styles.perdeu}>
           <p>Perdeu a senha?</p>

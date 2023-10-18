@@ -1,0 +1,16 @@
+.containerSpinnerDog{
+  overflow: hidden;
+  padding: 10px;
+}
+
+.sppinerDog{
+  animation: forward 2s linear infinite;
+}
+
+@keyframes forward {
+  0%{
+    transform: translateX(0px);
+  }100%{
+    transform: translateX(200px);
+  }
+}
