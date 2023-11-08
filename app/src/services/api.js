@@ -15,6 +15,19 @@ export const tokenPost = async (body) => {
   }
 };
 
+export const tokenValidatePost = async (token) => {
+  try {
+    const response = await axios.post(`${API_URL}/jwt-auth/v1/token/validate`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const userGet = async (token) => {
   try {
     const response = await axios.get(`${API_URL}/api/user`, {
