@@ -1,0 +1,46 @@
+.containerLoginPage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  gap: 20px;
+}
+
+.containerLoginPage::before {
+  content: "";
+  display: block;
+  background: url("../../assets/login.jpg") no-repeat 50%;
+  background-size: cover;
+}
+
+.containerSectionLoginForm {
+  max-width: 400px;
+  margin-top: 80px;
+  padding: 20px;
+}
+
+.inputPassword {
+  margin-top: 20px;
+  padding-right: 20px;
+}
+
+form {
+  margin-bottom: 2rem;
+}
+
+.perdeu {
+  display: inline-block;
+  color: #666;
+  padding: 0.5rem 0;
+  line-height: 1;
+  text-decoration: none;
+  border-bottom: 1px solid black;
+  padding-bottom: 2px;
+}
+
+.linkBtnCadastro {
+  text-decoration: none;
+}
+
+.containerCadastro {
+  margin-bottom: 80px;
+}

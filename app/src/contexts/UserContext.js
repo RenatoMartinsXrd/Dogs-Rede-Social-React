@@ -1,13 +1,24 @@
 import React, { useContext } from 'react'
 import { tokenPost, tokenValidatePost, userGet } from '../services/api'
+import { useNavigate } from 'react-router-dom'
 
 export const UserContext = React.createContext()
 
 export const UserStorage = ({ children }) => {
   const [data, setData] = React.useState(null)
-  const [login, setLogin] = React.useState(false)
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState(false)
+
+  const navigate = useNavigate()
+
+  const userLogout = React.useCallback(async () => {
+    setLoading(false)
+    setData(null)
+    setError(null)
+    window.localStorage.removeItem('token')
+
+    navigate('/login')
+  }, [navigate])
 
   const autoLogin = React.useCallback(async () => {
     const token = window.localStorage.getItem('token')
@@ -23,7 +34,6 @@ export const UserStorage = ({ children }) => {
         if (status !== 200) throw new Error('Token Inválido')
         const user = await userGet(token)
         setData(user)
-        setLogin(true)
       } catch (error) {
         await userLogout()
         setError(error?.message)
@@ -31,45 +41,39 @@ export const UserStorage = ({ children }) => {
         setLoading(false)
       }
     }
-  }, [])
+  }, [userLogout])
 
-  async function userLogin({ email, password }) {
-    try {
-      setLoading(true)
-      setError(null)
+  const userLogin = React.useCallback(
+    async ({ email, password }) => {
+      try {
+        setLoading(true)
+        setError(null)
 
-      const { token } = await tokenPost({
-        username: email,
-        password: password
-      })
+        const { token } = await tokenPost({
+          username: email,
+          password: password
+        })
 
-      window.localStorage.setItem('token', token)
-      const user = await userGet(token)
+        window.localStorage.setItem('token', token)
+        const user = await userGet(token)
 
-      setData(user)
-      setLogin(true)
-    } catch (error) {
-      await userLogout()
-      setError('Usuário Inválido')
-      setLogin(false)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  async function userLogout() {
-    setLoading(false)
-    setData(null)
-    setLogin(false)
-    setError(null)
-    window.localStorage.removeItem('token')
-  }
+        setData(user)
+        navigate('/conta')
+      } catch (error) {
+        await userLogout()
+        setError('Usuário Inválido')
+      } finally {
+        setLoading(false)
+      }
+    },
+    [navigate, userLogout]
+  )
 
   return (
     <UserContext.Provider
       value={{
         data,
-        login,
+        login: !!data,
         loading,
         error,
         userLogout,
