@@ -1,0 +1,19 @@
+.containerLoginPage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  gap: 20px;
+}
+
+.containerLoginPage::before {
+  content: "";
+  display: block;
+  background: url("../assets/login.jpg") no-repeat 50%;
+  background-size: cover;
+}
+
+.containerSectionLoginForm {
+  max-width: 400px;
+  margin-top: 80px;
+  padding: 20px;
+}
