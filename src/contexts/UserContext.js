@@ -44,14 +44,14 @@ export const UserStorage = ({ children }) => {
   }, [userLogout])
 
   const userLogin = React.useCallback(
-    async ({ email, password }) => {
+    async ({ username, password }) => {
       try {
         setLoading(true)
         setError(null)
 
         const { token } = await tokenPost({
-          username: email,
-          password: password
+          username,
+          password
         })
 
         window.localStorage.setItem('token', token)

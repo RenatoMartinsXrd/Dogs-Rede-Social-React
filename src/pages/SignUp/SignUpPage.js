@@ -5,10 +5,11 @@ import styles from './SignUpPage.module.css'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { TitleText } from '../../components/Generic/TitleText'
-import { schemaLogin } from '../../validations/schemas'
+import { schemaSignUp } from '../../validations/schemas'
 import { useUserContext } from '../../contexts/UserContext'
 import { SpinnerDog } from '../../components/SpinnerDog'
 import { ContainerDog } from '../../components/ContainerDog'
+import { userPost } from '../../services/api'
 
 export const SignUpPage = () => {
   const {
@@ -17,12 +18,18 @@ export const SignUpPage = () => {
     formState: { errors }
   } = useForm({
     mode: 'onTouched',
-    resolver: yupResolver(schemaLogin)
+    resolver: yupResolver(schemaSignUp)
   })
 
-  const { loading } = useUserContext()
-  async function createLoginSubmit({ email, password }) {
-    //create login
+  const { loading, userLogin } = useUserContext()
+
+  async function createLoginSubmit({ username, email, password }) {
+    await userPost({
+      username,
+      email,
+      password
+    })
+    await userLogin({ username, password })
   }
 
   return (
@@ -40,10 +47,10 @@ export const SignUpPage = () => {
         ) : (
           <>
             <Input
-              name="usuario"
+              name="username"
               placeholder="Digite um usuário"
               register={register}
-              error={errors.email?.message}
+              error={errors.username?.message}
             />
 
             <Input

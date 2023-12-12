@@ -17,10 +17,13 @@ export const Header = () => {
         </Link>
 
         {data?.username ? (
-          <Link to="/conta" className={styles.buttonLoginIconContainer}>
-            <p>{data.username}</p> <button onClick={userLogout}>sair</button>
-            <Icon icon={UsuarioIcon} size="small" />
-          </Link>
+          <div className={styles.buttonLoginIconContainer}>
+            <Link to="/conta">
+              <p>{data.username}</p>
+              <Icon icon={UsuarioIcon} size="small" />
+            </Link>
+            <button onClick={userLogout}>sair</button>
+          </div>
         ) : (
           <Link to="/login" className={styles.buttonLoginIconContainer}>
             <p>Login / Criar</p>

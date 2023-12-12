@@ -27,8 +27,8 @@ export const LoginPage = () => {
     autoLogin()
   }, [autoLogin])
 
-  async function loginSubmit({ email, password }) {
-    await userLogin({ email, password })
+  async function loginSubmit({ username, password }) {
+    await userLogin({ username, password })
   }
 
   return (
@@ -46,7 +46,7 @@ export const LoginPage = () => {
         ) : (
           <>
             <Input
-              name="email"
+              name="username"
               placeholder="Digite seu usuário"
               register={register}
               error={errors.email?.message}
