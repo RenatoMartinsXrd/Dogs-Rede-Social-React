@@ -1,0 +1,11 @@
+.containerError {
+  display: flex;
+  justify-items: left;
+  align-items: center;
+  gap: 10px
+}
+
+.containerError p {
+  color: red;
+  font-weight: 400;
+}

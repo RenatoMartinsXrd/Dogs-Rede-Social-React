@@ -10,6 +10,8 @@ import { useUserContext } from '../../contexts/UserContext'
 import { SpinnerDog } from '../../components/SpinnerDog'
 import { ContainerDog } from '../../components/ContainerDog'
 import { userPost } from '../../services/api'
+import useApi from '../../hooks/useApi'
+import { ErrorDog } from '../../components/ErrorDog'
 
 export const SignUpPage = () => {
   const {
@@ -21,15 +23,15 @@ export const SignUpPage = () => {
     resolver: yupResolver(schemaSignUp)
   })
 
-  const { loading, userLogin } = useUserContext()
+  const { requests, loading, error } = useApi()
+
+  const { userLogin } = useUserContext()
 
   async function createLoginSubmit({ username, email, password }) {
-    await userPost({
-      username,
-      email,
-      password
-    })
-    await userLogin({ username, password })
+    await requests([
+      () => userPost({ username, email, password }),
+      () => userLogin({ username, password })
+    ])
   }
 
   return (
@@ -70,7 +72,10 @@ export const SignUpPage = () => {
               type="password"
             />
 
-            <Button top={20}>Cadastar</Button>
+            <Button top={20} bottom={20}>
+              Cadastar
+            </Button>
+            <ErrorDog>{error?.message}</ErrorDog>
           </>
         )}
       </form>

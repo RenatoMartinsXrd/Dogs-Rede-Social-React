@@ -18,7 +18,7 @@ export const Header = () => {
 
         {data?.username ? (
           <div className={styles.buttonLoginIconContainer}>
-            <Link to="/conta">
+            <Link to="/conta" className={styles.buttonLoginIconContainer}>
               <p>{data.username}</p>
               <Icon icon={UsuarioIcon} size="small" />
             </Link>

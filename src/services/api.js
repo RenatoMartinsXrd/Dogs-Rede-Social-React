@@ -46,14 +46,10 @@ export const userGet = async (token) => {
 }
 
 export const userPost = async (body) => {
-  try {
-    const response = await axios.post(`${API_URL}/api/user`, body, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    return response.data
-  } catch (error) {
-    console.log(error)
-  }
+  const response = await axios.post(`${API_URL}/api/user`, body, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  return response.data
 }
