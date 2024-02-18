@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/Generic/Button'
 import { Input } from '../../components/Generic/Input'
 import styles from './LoginPage.module.css'
@@ -10,6 +10,9 @@ import { schemaLogin } from '../../validations/schemas'
 import { useUserContext } from '../../contexts/UserContext'
 import { SpinnerDog } from '../../components/SpinnerDog'
 import { ContainerDog } from '../../components/ContainerDog'
+import { useEffect } from 'react'
+import { ErrorDog } from '../../components/ErrorDog'
+import useApi from '../../hooks/useApi'
 
 export const LoginPage = () => {
   const {
@@ -21,14 +24,14 @@ export const LoginPage = () => {
     resolver: yupResolver(schemaLogin)
   })
 
-  const { loading, autoLogin, userLogin } = useUserContext()
+  const navigate = useNavigate()
+  const { userLogin } = useUserContext()
 
-  React.useEffect(() => {
-    autoLogin()
-  }, [autoLogin])
+  const { request, loading, error } = useApi()
 
   async function loginSubmit({ username, password }) {
-    await userLogin({ username, password })
+    const loginSuccess = await request(() => userLogin({ username, password }))
+    if (loginSuccess) navigate('/conta')
   }
 
   return (
@@ -64,6 +67,7 @@ export const LoginPage = () => {
             <Button top={20}>Entrar</Button>
           </>
         )}
+        <ErrorDog>{error?.message && 'Usuário inválido'}</ErrorDog>
       </form>
 
       <Link to="/login/perdeu" className={styles.perdeu}>

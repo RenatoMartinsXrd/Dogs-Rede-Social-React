@@ -1,72 +1,52 @@
 import React, { useContext } from 'react'
 import { tokenPost, tokenValidatePost, userGet } from '../services/api'
-import { useNavigate } from 'react-router-dom'
+import useApi from '../hooks/useApi'
 
 export const UserContext = React.createContext()
 
 export const UserStorage = ({ children }) => {
-  const [data, setData] = React.useState(null)
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState(false)
+  const { request, data, error, loading, setLoading, setData, setError } =
+    useApi()
 
-  const navigate = useNavigate()
+  const isTokenValid = React.useCallback(async () => {
+    const token = window.localStorage.getItem('token')
+    if (!token) {
+      return false
+    }
+    const { data } = await tokenValidatePost(token)
+    return data.status === 200
+  }, [])
 
   const userLogout = React.useCallback(async () => {
     setLoading(false)
     setData(null)
     setError(null)
     window.localStorage.removeItem('token')
-
-    navigate('/login')
-  }, [navigate])
+  }, [setData, setError, setLoading])
 
   const autoLogin = React.useCallback(async () => {
     const token = window.localStorage.getItem('token')
-
-    if (token) {
-      try {
-        setLoading(true)
-        setError(null)
-
-        const { data } = await tokenValidatePost(token)
-        const { status } = data
-
-        if (status !== 200) throw new Error('Token Inválido')
-        const user = await userGet(token)
-        setData(user)
-      } catch (error) {
-        await userLogout()
-        setError(error?.message)
-      } finally {
-        setLoading(false)
-      }
+    if (await isTokenValid()) {
+      await request(() => userGet(token))
+      return true
     }
-  }, [userLogout])
+    return false
+  }, [isTokenValid, request])
 
   const userLogin = React.useCallback(
     async ({ username, password }) => {
-      try {
-        setLoading(true)
-        setError(null)
+      setLoading(true)
+      const { token } = await tokenPost({
+        username,
+        password
+      })
 
-        const { token } = await tokenPost({
-          username,
-          password
-        })
-
-        window.localStorage.setItem('token', token)
-        const user = await userGet(token)
-
-        setData(user)
-        navigate('/conta')
-      } catch (error) {
-        await userLogout()
-        setError('Usuário Inválido')
-      } finally {
-        setLoading(false)
-      }
+      window.localStorage.setItem('token', token)
+      const user = await userGet(token)
+      setData(user)
+      setLoading(false)
     },
-    [navigate, userLogout]
+    [setData, setLoading]
   )
 
   return (
@@ -76,6 +56,7 @@ export const UserStorage = ({ children }) => {
         login: !!data,
         loading,
         error,
+        setError,
         userLogout,
         userLogin,
         autoLogin
