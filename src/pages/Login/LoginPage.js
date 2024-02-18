@@ -10,7 +10,6 @@ import { schemaLogin } from '../../validations/schemas'
 import { useUserContext } from '../../contexts/UserContext'
 import { SpinnerDog } from '../../components/SpinnerDog'
 import { ContainerDog } from '../../components/ContainerDog'
-import { useEffect } from 'react'
 import { ErrorDog } from '../../components/ErrorDog'
 import useApi from '../../hooks/useApi'
 
@@ -52,7 +51,7 @@ export const LoginPage = () => {
               name="username"
               placeholder="Digite seu usuário"
               register={register}
-              error={errors.email?.message}
+              error={errors.username?.message}
             />
 
             <Input

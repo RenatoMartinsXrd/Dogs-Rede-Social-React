@@ -3,7 +3,7 @@ export const APP_ROUTES = {
     conta: '/conta'
   },
   public: {
-    login: '/login',
+    login: ['/login', '/login/criar'],
     home: '/'
   }
 }

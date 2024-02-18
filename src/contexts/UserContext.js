@@ -5,8 +5,7 @@ import useApi from '../hooks/useApi'
 export const UserContext = React.createContext()
 
 export const UserStorage = ({ children }) => {
-  const { request, data, error, loading, setLoading, setData, setError } =
-    useApi()
+  const { request, data, setData } = useApi()
 
   const isTokenValid = React.useCallback(async () => {
     const token = window.localStorage.getItem('token')
@@ -18,11 +17,9 @@ export const UserStorage = ({ children }) => {
   }, [])
 
   const userLogout = React.useCallback(async () => {
-    setLoading(false)
     setData(null)
-    setError(null)
     window.localStorage.removeItem('token')
-  }, [setData, setError, setLoading])
+  }, [setData])
 
   const autoLogin = React.useCallback(async () => {
     const token = window.localStorage.getItem('token')
@@ -35,18 +32,16 @@ export const UserStorage = ({ children }) => {
 
   const userLogin = React.useCallback(
     async ({ username, password }) => {
-      setLoading(true)
       const { token } = await tokenPost({
         username,
         password
       })
 
       window.localStorage.setItem('token', token)
-      const user = await userGet(token)
+      const user = await request(() => userGet(token))
       setData(user)
-      setLoading(false)
     },
-    [setData, setLoading]
+    [request, setData]
   )
 
   return (
@@ -54,9 +49,6 @@ export const UserStorage = ({ children }) => {
       value={{
         data,
         login: !!data,
-        loading,
-        error,
-        setError,
         userLogout,
         userLogin,
         autoLogin

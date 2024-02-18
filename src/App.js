@@ -24,8 +24,7 @@ function App() {
 
         if (loginSuccess) {
           navigate('/conta')
-        } else {
-          await userLogout()
+        } else if (!checkIsPublicRoute(pathname)) {
           navigate('/login')
         }
       } else if (checkIsPublicRoute(pathname) && login) {
