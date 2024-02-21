@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import './App.css'
-import { Header } from './components/Generic/Header'
-import { Footer } from './components/Generic/Footer'
+import { Header } from './components/Header'
+import { Footer } from './components/Footer'
 import { AppRoutes } from './routes/AppRoutes'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useUserContext } from './contexts/UserContext'
 import { AuthRoutes } from './routes/AuthRoutes'
 import { checkIsPublicRoute } from './utils/utils'
-import { SpinnerDog } from './components/SpinnerDog'
+import { SpinnerDog } from './components/ui/SpinnerDog'
 
 function App() {
   const { login, autoLogin, userLogout, data } = useUserContext()
