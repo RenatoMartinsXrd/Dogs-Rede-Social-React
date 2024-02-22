@@ -1,0 +1,22 @@
+.header {
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.buttonLoginIconContainer {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonLoginIconContainer p:first-child {
+  padding-right: 10px;
+}
+
+.navContainer {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
