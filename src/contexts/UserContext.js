@@ -12,8 +12,13 @@ export const UserStorage = ({ children }) => {
     if (!token) {
       return false
     }
-    const { data } = await tokenValidatePost(token)
-    return data.status === 200
+
+    try {
+      const { data } = await tokenValidatePost(token)
+      return data?.status === 200
+    } catch (error) {
+      return false
+    }
   }, [])
 
   const userLogout = React.useCallback(async () => {
