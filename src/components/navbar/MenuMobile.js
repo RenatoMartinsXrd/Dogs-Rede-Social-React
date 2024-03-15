@@ -13,6 +13,10 @@ export const MenuMobile = () => {
   const [isOpen, setOpen] = useState(false)
   const { userLogout } = useUserContext()
 
+  const handleMenu = () => {
+    setOpen(false)
+  }
+
   return (
     <section className={styles.containerBoxMenuMobile}>
       <section className={styles.containerHamburguer}>
@@ -24,7 +28,7 @@ export const MenuMobile = () => {
         />
       </section>
       {isOpen && (
-        <nav className={styles.navContainerMobile}>
+        <nav className={styles.navContainerMobile} onClick={handleMenu}>
           <NavLink to="/conta" end>
             <Icon icon={FeedIcon} size="medium" />
             <p>Minhas fotos</p>
