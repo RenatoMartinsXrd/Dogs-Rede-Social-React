@@ -41,3 +41,12 @@ export const userPost = async (body) => {
   })
   return response.data
 }
+
+export const photoPost = async (formData, token) => {
+  const response = await axios.post(`${API_URL}/api/photo`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  return response.data
+}

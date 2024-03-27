@@ -1,0 +1,29 @@
+.containerAccountPost {
+	display: flex;
+	justify-content: space-between;
+}
+
+.containerAccountPost form {
+	width: 50%;
+}
+
+.containerAccountPost form input {
+	margin-top: 20px;
+}
+
+.containerPreview {
+	margin-top: 20px;
+	width: 40%;
+}
+
+.hiddenProfilePreview {
+	background-color: red;
+	height: 270px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #eee;
+	border-radius: .2em;
+	border: 1px solid transparent;
+	transition: 1s;
+}
