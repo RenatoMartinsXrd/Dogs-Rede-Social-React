@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { NavbarProfile } from './components/NavbarProfile'
+import { NavbarProfile } from './components/NavbarProfile/NavbarProfile'
 
 export const AccountProfilePage = () => {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './AccountFeedPage.module.css'
-import { ItemFeed } from '../../../../components/ItemFeed'
+import { ItemFeed } from '../../components/ItemFeed'
 import useApi from '../../../../hooks/useApi'
 import { photosGet } from '../../../../services/api'
 

@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import styles from './NavbarProfile.module.css'
 import { Sling as Hamburger } from 'hamburger-react'
-import { ReactComponent as FeedIcon } from '../../../assets/feed.svg'
-import { ReactComponent as EstatisticaIcon } from '../../../assets/estatisticas.svg'
-import { ReactComponent as PostarIcon } from '../../../assets/adicionar.svg'
-import { ReactComponent as SairIcon } from '../../../assets/sair.svg'
-import { useUserContext } from '../../../contexts/UserContext'
-import { Icon } from '../../../components/ui/Icon'
+import { ReactComponent as FeedIcon } from '../../../../assets/feed.svg'
+import { ReactComponent as EstatisticaIcon } from '../../../../assets/estatisticas.svg'
+import { ReactComponent as PostarIcon } from '../../../../assets/adicionar.svg'
+import { ReactComponent as SairIcon } from '../../../../assets/sair.svg'
+import { useUserContext } from '../../../../contexts/UserContext'
+import { Icon } from '../../../../components/ui/Icon'
 
 export const MenuMobile = () => {
   const [isOpen, setOpen] = useState(false)
