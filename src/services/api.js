@@ -50,3 +50,10 @@ export const photoPost = async (formData, token) => {
   })
   return response.data
 }
+
+export const photosGet = async (page, total, user) => {
+  const response = await axios.get(
+    `${API_URL}/api/photo/?_page${page}&total${total}&user=${user}`
+  )
+  return response.data
+}

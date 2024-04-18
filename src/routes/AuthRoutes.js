@@ -9,7 +9,7 @@ export const AuthRoutes = () => {
   return (
     <Routes>
       <Route path="conta" element={<AccountProfilePage />}>
-        <Route element={<AccountFeedPage />} />
+        <Route index element={<AccountFeedPage />} />
         <Route path="postar" element={<AccountPostPage />} />
         <Route path="estatisticas" element={<AccountEstatisticasPage />} />
       </Route>
