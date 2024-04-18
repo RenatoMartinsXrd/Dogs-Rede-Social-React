@@ -1,12 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Icon } from '../ui/Icon'
-import { ReactComponent as FeedIcon } from '../../assets/feed.svg'
-import { ReactComponent as EstatisticaIcon } from '../../assets/estatisticas.svg'
-import { ReactComponent as PostarIcon } from '../../assets/adicionar.svg'
-import { ReactComponent as SairIcon } from '../../assets/sair.svg'
+import { ReactComponent as FeedIcon } from '../../../assets/feed.svg'
+import { ReactComponent as EstatisticaIcon } from '../../../assets/estatisticas.svg'
+import { ReactComponent as PostarIcon } from '../../../assets/adicionar.svg'
+import { ReactComponent as SairIcon } from '../../../assets/sair.svg'
 import styles from './NavbarProfile.module.css'
-import { useUserContext } from '../../contexts/UserContext'
+import { useUserContext } from '../../../contexts/UserContext'
+import { Icon } from '../../../components/ui/Icon'
 
 export const MenuDesktop = () => {
   const { userLogout } = useUserContext()

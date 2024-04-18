@@ -1,12 +1,12 @@
 import React from 'react'
 import styles from './NavbarProfile.module.css'
-import { TitleText } from '../ui/TitleText'
 import { useMediaQuery } from 'react-responsive'
 import { MenuDesktop } from './MenuDesktop'
 import { MenuMobile } from './MenuMobile'
-import { NAVBAR_TITLE_LIST } from '../../constants/navbar-title-list'
+import { NAVBAR_TITLE_LIST } from '../../../constants/navbar-title-list'
 import { useLocation } from 'react-router-dom'
-import { APP_ROUTES } from '../../constants/app-routes'
+import { APP_ROUTES } from '../../../constants/app-routes'
+import { TitleText } from '../../../components/ui/TitleText'
 
 export const NavbarProfile = () => {
   const isMobile = useMediaQuery({ maxWidth: '768px' })
