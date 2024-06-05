@@ -51,9 +51,10 @@ export const photoPost = async (formData, token) => {
   return response.data
 }
 
-export const photosGet = async (page, total, user) => {
+export const photosGet = async ({ page, total, user }) => {
+  const uniqueParam = new Date().getTime()
   const response = await axios.get(
-    `${API_URL}/api/photo/?_page${page}&_total${total}&_user=${user}`
+    `${API_URL}/api/photo/?_page=${page}&_total=${total}&_user=${user}&_=${uniqueParam}`
   )
   return response.data
 }

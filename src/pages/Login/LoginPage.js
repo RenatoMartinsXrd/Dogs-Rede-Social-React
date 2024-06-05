@@ -12,6 +12,7 @@ import { SpinnerDog } from '../../components/ui/SpinnerDog'
 import { ContainerDog } from '../../components/ContainerDog'
 import { ErrorDog } from '../../components/ErrorDog'
 import useApi from '../../hooks/useApi'
+import useAuth from '../../hooks/useAuth'
 
 export const LoginPage = () => {
   const {
@@ -23,14 +24,10 @@ export const LoginPage = () => {
     resolver: yupResolver(schemaLogin)
   })
 
-  const navigate = useNavigate()
-  const { userLogin } = useUserContext()
-
-  const { request, loading, error } = useApi()
+  const { mutationUserLogin } = useAuth()
 
   async function loginSubmit({ username, password }) {
-    const loginSuccess = await request(() => userLogin({ username, password }))
-    if (loginSuccess) navigate('/conta')
+    mutationUserLogin.mutate({ username, password })
   }
 
   return (
@@ -38,7 +35,7 @@ export const LoginPage = () => {
       <TitleText>Login</TitleText>
 
       <form onSubmit={handleSubmit(loginSubmit)}>
-        {loading ? (
+        {mutationUserLogin.isPending ? (
           <>
             <SpinnerDog />
             <Button top={20} disabled>
@@ -66,7 +63,7 @@ export const LoginPage = () => {
             <Button top={20}>Entrar</Button>
           </>
         )}
-        <ErrorDog>{error?.message && 'Usuário inválido'}</ErrorDog>
+        <ErrorDog>{mutationUserLogin.isError && 'Usuário inválido'}</ErrorDog>
       </form>
 
       <Link to="/login/perdeu" className={styles.perdeu}>

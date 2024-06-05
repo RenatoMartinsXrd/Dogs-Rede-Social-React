@@ -5,11 +5,11 @@ import { ReactComponent as EstatisticaIcon } from '../../../../assets/estatistic
 import { ReactComponent as PostarIcon } from '../../../../assets/adicionar.svg'
 import { ReactComponent as SairIcon } from '../../../../assets/sair.svg'
 import styles from './NavbarProfile.module.css'
-import { useUserContext } from '../../../../contexts/UserContext'
 import { Icon } from '../../../../components/ui/Icon'
+import useAuth from '../../../../hooks/useAuth'
 
 export const MenuDesktop = () => {
-  const { userLogout } = useUserContext()
+  const { mutationUserLogout } = useAuth()
   return (
     <nav className={styles.containerNavDesktop}>
       <NavLink to="/conta" end>
@@ -23,7 +23,7 @@ export const MenuDesktop = () => {
         <Icon icon={PostarIcon} size="medium" />
       </NavLink>
 
-      <button onClick={userLogout}>
+      <button onClick={mutationUserLogout.mutate}>
         <Icon icon={SairIcon} size="medium" />
       </button>
     </nav>

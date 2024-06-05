@@ -7,12 +7,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { ErrorDog } from '../../../../components/ErrorDog'
 import { photoPost } from '../../../../services/api'
 import { objectToFormData } from '../../../../utils/utils'
-import useApi from '../../../../hooks/useApi'
 import { schemaPhotoPost } from '../../../../validations/schemas'
 import styles from './AccountPostPage.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDog } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
 
 export const AccountPostPage = () => {
   const {
@@ -28,15 +28,18 @@ export const AccountPostPage = () => {
 
   const watchPhotoPreview = watch('img')
   const token = window.localStorage.getItem('token')
-
-  const { request, loading, error } = useApi()
   const navigate = useNavigate()
+
+  const mutationPhotoPost = useMutation({
+    mutationFn: ({ formData, token }) => photoPost(formData, token),
+    onSuccess: () => {
+      navigate('/conta')
+    }
+  })
 
   async function createPhotoPost(values) {
     const formData = objectToFormData(values)
-
-    await request(() => photoPost(formData, token))
-    navigate('/conta')
+    mutationPhotoPost.mutate({ formData, token })
   }
 
   const isPhotoPreview = () => {
@@ -51,7 +54,7 @@ export const AccountPostPage = () => {
   return (
     <section className={styles.containerAccountPost}>
       <form onSubmit={handleSubmit(createPhotoPost)}>
-        {loading ? (
+        {mutationPhotoPost.isPending ? (
           <>
             <SpinnerDog />
             <Button top={20} disabled>
@@ -66,14 +69,12 @@ export const AccountPostPage = () => {
               register={register}
               error={errors.nome?.message}
             />
-
             <Input
               name="peso"
               placeholder="Digite o peso do animalzinho"
               register={register}
               error={errors.peso?.message}
             />
-
             <Input
               name="idade"
               placeholder="Digite a idade do animalzinho"
@@ -81,18 +82,19 @@ export const AccountPostPage = () => {
               error={errors.idade?.message}
               type="number"
             />
-
             <Input
               name="img"
               register={register}
               error={errors.img?.message}
               type="file"
             />
-
             <Button top={20} bottom={20}>
               Enviar
             </Button>
-            <ErrorDog>{error?.message}</ErrorDog>
+
+            <ErrorDog>
+              {mutationPhotoPost?.error?.response?.data?.message}
+            </ErrorDog>
           </>
         )}
       </form>

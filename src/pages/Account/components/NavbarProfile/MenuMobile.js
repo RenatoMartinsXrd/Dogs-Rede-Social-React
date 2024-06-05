@@ -6,12 +6,12 @@ import { ReactComponent as FeedIcon } from '../../../../assets/feed.svg'
 import { ReactComponent as EstatisticaIcon } from '../../../../assets/estatisticas.svg'
 import { ReactComponent as PostarIcon } from '../../../../assets/adicionar.svg'
 import { ReactComponent as SairIcon } from '../../../../assets/sair.svg'
-import { useUserContext } from '../../../../contexts/UserContext'
 import { Icon } from '../../../../components/ui/Icon'
+import useAuth from '../../../../hooks/useAuth'
 
 export const MenuMobile = () => {
   const [isOpen, setOpen] = useState(false)
-  const { userLogout } = useUserContext()
+  const { mutationUserLogout } = useAuth()
 
   const handleMenu = () => {
     setOpen(false)
@@ -43,7 +43,7 @@ export const MenuMobile = () => {
             <p>Postar</p>
           </NavLink>
 
-          <button onClick={userLogout}>
+          <button onClick={mutationUserLogout.mutate}>
             <Icon icon={SairIcon} size="medium" />
             <p>Sair</p>
           </button>

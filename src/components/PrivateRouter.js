@@ -1,9 +1,28 @@
-import React from 'react'
-import { useUserContext } from '../contexts/UserContext'
-import { Navigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom/dist'
+import useAuth from '../hooks/useAuth'
 
-export const PrivateRouter = ({ children }) => {
-  const { login } = useUserContext()
+export const PrivateRouter = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const navigate = useNavigate()
+  const { mutationTokenValidatePost, mutationUserLogout } = useAuth()
 
-  return login ? children : <Navigate to="/login" />
+  React.useEffect(() => {
+    const token = window.localStorage.getItem('token')
+    mutationTokenValidatePost
+      .mutateAsync(token)
+      .then(({ data }) => {
+        if (data?.status === 200) {
+          setIsAuthenticated(true)
+        } else {
+          navigate('/login')
+        }
+      })
+      .catch(() => {
+        navigate('/login')
+        mutationUserLogout.mutate()
+      })
+  }, [])
+
+  return isAuthenticated && <Outlet />
 }

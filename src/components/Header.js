@@ -5,9 +5,11 @@ import { ReactComponent as LogoDogs } from '../assets/dogs.svg'
 import { ReactComponent as UsuarioIcon } from '../assets/usuario.svg'
 import { Icon } from './ui/Icon'
 import { useUserContext } from '../contexts/UserContext'
+import useAuth from '../hooks/useAuth'
 
 export const Header = () => {
-  const { userLogout, data } = useUserContext()
+  const { data } = useUserContext()
+  const { mutationUserLogout } = useAuth()
 
   return (
     <div className={styles.header}>
@@ -22,7 +24,7 @@ export const Header = () => {
               <p>{data?.username}</p>
               <Icon icon={UsuarioIcon} size="small" />
             </Link>
-            <button onClick={userLogout}>sair</button>
+            <button onClick={mutationUserLogout.mutate}>sair</button>
           </div>
         ) : (
           <Link to="/login" className={styles.buttonLoginIconContainer}>

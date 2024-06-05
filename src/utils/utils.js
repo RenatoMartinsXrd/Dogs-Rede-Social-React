@@ -16,9 +16,9 @@ export const objectToFormData = (obj) => {
     if (obj.hasOwnProperty(key)) {
       const value = obj[key]
       if (value[0] instanceof File) {
-        formData.append(key, value[0], value[0].name)
+        formData.set(key, value[0], value[0].name)
       } else {
-        formData.append(key, value[0])
+        formData.set(key, value)
       }
     }
   }
