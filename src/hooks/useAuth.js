@@ -1,11 +1,12 @@
-import { useUserContext } from '../contexts/UserContext'
+import { UserContext } from '../contexts/UserContext'
 import { tokenPost, tokenValidatePost, userGet } from '../services/api'
 import { useMutation } from '@tanstack/react-query'
-import { useLocation, useNavigate } from 'react-router-dom/dist'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { checkIsPublicRoute } from '../utils/utils'
+import { useContext } from 'react'
 
 const useAuth = () => {
-  const { setData } = useUserContext()
+  const { setData } = useContext(UserContext)
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
